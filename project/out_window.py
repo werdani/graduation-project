@@ -85,14 +85,12 @@ class Ui_OutputDialog(QDialog):
             self.TimeList1 = []
             self.TimeList2 = []
             attendance_list = os.listdir(path)
-
             # print(attendance_list)
             for cl in attendance_list:
                 cur_img = cv2.imread(f'{path}/{cl}')
                 images.append(cur_img)
                 x=cl.rsplit('.', 666)
                 self.class_names.append(x[0])
-
             for img in images:
                 try:
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -103,7 +101,6 @@ class Ui_OutputDialog(QDialog):
                 except Exception as e:
                     print(e)
             if self.NameLabe.text()=='start':
-
                 self.timer.timeout.connect(self.update_frame)  # Connect timeout to the output function
                 self.timer.start(500)  # emit the timeout() signal at x=40ms
 
@@ -113,14 +110,14 @@ class Ui_OutputDialog(QDialog):
                 self.ClockInButton.setEnabled(False)
                 with open('Attendance.csv', 'a') as f:
                         if (self.NameLabel.text() != '' ):
-                            buttonReply = QMessageBox.question(self, 'Welcome ' + self.NameLabel.text(), 'Are you Clocking In?' ,
+                            buttonReply = QMessageBox.question(self, 'Welcome ' + self.NameLabel.text(), 'Are you Check In?' ,
                                                                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                             if buttonReply == QMessageBox.Yes:
                                 text = str(self.comboBox.currentText())
                                 text2 = str(self.comboBox2.currentText())
 
-                                date_time_string = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
-                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Check In')
+                                date_time_string = datetime.datetime.now().strftime("%d/%m/%y -- %H:%M:%S")
+                                f.writelines(f'\n{self.NameLabel.text()} -- {date_time_string} -- {text} -- {text2} -- Check In')
                                 self.ClockInButton.setChecked(False)
                                 self.StatusLabel.setText('Check In')
                                 self.HoursLabel.setText('Measuring')
@@ -157,14 +154,14 @@ class Ui_OutputDialog(QDialog):
                 self.ClockOutButton.setEnabled(False)
                 with open('Attendance.csv', 'a') as f:
                         if (self.NameLabel.text()!= 'unknown'):
-                            buttonReply = QMessageBox.question(self, 'Cheers ' + self.NameLabel.text(), 'Are you Clocking Out?',
+                            buttonReply = QMessageBox.question(self, 'Cheers ' + self.NameLabel.text(), 'Are you Check Out?',
                                                               QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
                             if buttonReply == QMessageBox.Yes:
                                 text = str(self.comboBox.currentText())
 
                                 text2 = str(self.comboBox2.currentText())
-                                date_time_string = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
-                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Check Out')
+                                date_time_string = datetime.datetime.now().strftime("%d/%m/%y -- %H:%M:%S")
+                                f.writelines(f'\n{self.NameLabel.text()} -- {date_time_string} -- {text} -- {text2} -- Check Out')
                                 self.ClockOutButton.setChecked(False)
                                 self.StatusLabel.setText('Check Out')
                                 self.Time2 = datetime.datetime.now()
@@ -183,16 +180,7 @@ class Ui_OutputDialog(QDialog):
                                 self.ClockOutButton.setEnabled(True)
 
     def face_rec_(self, frame, encode_list_known, class_names):
-        """
-        :param frame: frame from camera
-        :param encode_list_known: known face encoding
-        :param class_names: known face names
-        :return:
-        """
-        # csv
-        
         def mark_attendance(idimg):
-            print('ssssssssssssssssssssssssssssssss')
             if self.NameLabel.text()=='':
                 text_files = glob.glob( "ImagesAttendance/*.jpg", recursive = True)
                 print(text_files)
@@ -209,11 +197,6 @@ class Ui_OutputDialog(QDialog):
                 else:
                     self.NameLabe2.setText('0')
 
-
-            """
-            :param name: detected face known or unknown one
-            :return:
-            """
             if (k[1] != 'unknown'):
                 self.NameLabe2.setText('1')
                 self.IDLabel.setText(idimg)
@@ -233,10 +216,9 @@ class Ui_OutputDialog(QDialog):
         # face recognition
         if self.NameLabe.text()=='start':
             faces_cur_frame = face_recognition.face_locations(frame)
-            print('-----------------------------')
             encodes_cur_frame = face_recognition.face_encodings(frame, faces_cur_frame)
         else:
-            print('ooooooooooooooooooooooooooo')
+            print('no')
         # count = 0
         for encodeFace, faceLoc in zip(encodes_cur_frame, faces_cur_frame):
             match = face_recognition.compare_faces(encode_list_known, encodeFace, tolerance=0.50)
@@ -247,13 +229,11 @@ class Ui_OutputDialog(QDialog):
             # print("s",best_match_index)
             if match[best_match_index]:
                 idimg = class_names[best_match_index].upper()
-                print('**************************')
                 #to drow a rectangle on the face
                 y1, x2, y2, x1 = faceLoc
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 0), 2)
                 cv2.rectangle(frame, (x1, y2 - 20), (x2, y2), (0, 200, 0), cv2.FILLED)
                 cv2.putText(frame, idimg, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
-
                 if  idimg!=self.IDLabel.text():
                         self.NameLabe2.setText('')
                         self.IDLabel.setText('')
@@ -263,26 +243,21 @@ class Ui_OutputDialog(QDialog):
                         self.HoursLabel.setText('')
                         self.MinLabel.setText('')
             mark_attendance(idimg)
-
         return frame
 
     def showdialog(self):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
-
         msg.setText("This is a message box")
         msg.setInformativeText("This is additional information")
         msg.setWindowTitle("MessageBox demo")
         msg.setDetailedText("The details are as follows:")
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
 
-
-
     def ElapseList(self,name):
         with open('Attendance.csv', "r") as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=';')
             line_count = 2
-
             Time1 = datetime.datetime.now()
             Time2 = datetime.datetime.now()
             for row in csv_reader:
@@ -298,8 +273,6 @@ class Ui_OutputDialog(QDialog):
                                 #print(f'\t ROW 0 {row[0]}  ROW 1 {row[1]} ROW2 {row[2]}.')
                                 Time2 = (datetime.datetime.strptime(row[1], '%y/%m/%d, %H:%M:%S'))
                                 self.TimeList2.append(Time2)
-                                #print(Time2)
-
 
     def update_frame(self):
         print('ss')
@@ -313,14 +286,6 @@ class Ui_OutputDialog(QDialog):
             print(cv2.VideoCapture(int(1), cv2.CAP_DSHOW))
 
     def displayImage(self, image, encode_list, class_names, window=1):
-        """
-        :param image: frame from camera
-        :param encode_list: known face encoding list
-        :param class_names: known face names
-        :param window: number of window
-        :return:
-        """
-
         image = cv2.resize(image, (640, 480))
         try:
             image = self.face_rec_(image, encode_list, class_names)
