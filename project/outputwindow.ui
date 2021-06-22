@@ -115,7 +115,7 @@ border-radius: 25px;
 </string>
      </property>
      <property name="text">
-      <string>Cheke In</string>
+      <string>Check In</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -151,7 +151,7 @@ border-radius: 25px;
 </string>
      </property>
      <property name="text">
-      <string>Cheke Out</string>
+      <string>Check Out</string>
      </property>
      <property name="checkable">
       <bool>true</bool>

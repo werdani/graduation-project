@@ -45,8 +45,8 @@ class Ui_OutputDialog(QDialog):
         self.Time_Label.setText(current_time)
         self.Bstart.clicked.connect(self.start)
         self.Bstop.clicked.connect(self.stop)
-        self.ClockInButton.clicked.connect(self.ChekeIn)
-        self.ClockOutButton.clicked.connect(self.ChekeOut)
+        self.ClockInButton.clicked.connect(self.ClockIn)
+        self.ClockOutButton.clicked.connect(self.ClockOut)
         self.image = None
  
     @pyqtSlot()
@@ -70,7 +70,6 @@ class Ui_OutputDialog(QDialog):
         self.imgLabel.setText(" ")
 
 
-        
     def start(self):
             self.NameLabe.setText('start')
             self.capture = cv2.VideoCapture(int(0), cv2.CAP_DSHOW)
@@ -109,7 +108,7 @@ class Ui_OutputDialog(QDialog):
                 self.timer.start(500)  # emit the timeout() signal at x=40ms
 
 
-    def ChekeIn(self):
+    def ClockIn(self):
             if self.ClockInButton.isChecked():
                 self.ClockInButton.setEnabled(False)
                 with open('Attendance.csv', 'a') as f:
@@ -121,9 +120,9 @@ class Ui_OutputDialog(QDialog):
                                 text2 = str(self.comboBox2.currentText())
 
                                 date_time_string = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
-                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Cheke In')
+                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Check In')
                                 self.ClockInButton.setChecked(False)
-                                self.StatusLabel.setText('Cheke In')
+                                self.StatusLabel.setText('Check In')
                                 self.HoursLabel.setText('Measuring')
                                 self.MinLabel.setText('')
                                 #self.CalculateElapse(idimg)
@@ -131,11 +130,21 @@ class Ui_OutputDialog(QDialog):
                                 self.Time1 = datetime.datetime.now()
                                 #print(self.Time1)
                                 self.ClockInButton.setEnabled(True)
+
+                                self.NameLabe2.setText('')
+                                self.IDLabel.setText('')
+                                self.NameLabel.setText('')
+                                self.lvlLabel.setText('')
+                                self.StatusLabel.setText('')
+                                self.HoursLabel.setText('')
+                                self.MinLabel.setText('')
+
                             else:
                                 self.ClockInButton.setChecked(False)
                                 self.ClockInButton.setEnabled(True)
 
-                        
+                            time.sleep(1.5)
+
                         else:
                             buttonReply = QMessageBox.question(self, 'Welcome ' + self.NameLabe.text(), 'You are unknown!' ,
                                                             QMessageBox.Ok  )
@@ -143,7 +152,7 @@ class Ui_OutputDialog(QDialog):
                             self.ClockInButton.setEnabled(True)
 
 
-    def ChekeOut(self):
+    def ClockOut(self):
             if self.ClockOutButton.isChecked():
                 self.ClockOutButton.setEnabled(False)
                 with open('Attendance.csv', 'a') as f:
@@ -155,9 +164,9 @@ class Ui_OutputDialog(QDialog):
 
                                 text2 = str(self.comboBox2.currentText())
                                 date_time_string = datetime.datetime.now().strftime("%y/%m/%d, %H:%M:%S")
-                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Cheke Out')
+                                f.writelines(f'\n{self.NameLabel.text()};{date_time_string};{text};{text2};Check Out')
                                 self.ClockOutButton.setChecked(False)
-                                self.StatusLabel.setText('Cheke Out')
+                                self.StatusLabel.setText('Check Out')
                                 self.Time2 = datetime.datetime.now()
                                 #print(self.Time2)
 
@@ -183,6 +192,7 @@ class Ui_OutputDialog(QDialog):
         # csv
         
         def mark_attendance(idimg):
+            print('ssssssssssssssssssssssssssssssss')
             if self.NameLabel.text()=='':
                 text_files = glob.glob( "ImagesAttendance/*.jpg", recursive = True)
                 print(text_files)
@@ -223,6 +233,7 @@ class Ui_OutputDialog(QDialog):
         # face recognition
         if self.NameLabe.text()=='start':
             faces_cur_frame = face_recognition.face_locations(frame)
+            print('-----------------------------')
             encodes_cur_frame = face_recognition.face_encodings(frame, faces_cur_frame)
         else:
             print('ooooooooooooooooooooooooooo')
@@ -233,14 +244,24 @@ class Ui_OutputDialog(QDialog):
             idimg = "unknown"
             best_match_index = np.argmin(face_dis)
             y1, x2, y2, x1 = faceLoc
-
             # print("s",best_match_index)
             if match[best_match_index]:
                 idimg = class_names[best_match_index].upper()
+                print('**************************')
+                #to drow a rectangle on the face
                 y1, x2, y2, x1 = faceLoc
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 200, 0), 2)
                 cv2.rectangle(frame, (x1, y2 - 20), (x2, y2), (0, 200, 0), cv2.FILLED)
                 cv2.putText(frame, idimg, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 1)
+
+                if  idimg!=self.IDLabel.text():
+                        self.NameLabe2.setText('')
+                        self.IDLabel.setText('')
+                        self.NameLabel.setText('')
+                        self.lvlLabel.setText('')
+                        self.StatusLabel.setText('')
+                        self.HoursLabel.setText('')
+                        self.MinLabel.setText('')
             mark_attendance(idimg)
 
         return frame
@@ -313,6 +334,7 @@ class Ui_OutputDialog(QDialog):
                 qformat = QImage.Format_RGB888
         outImage = QImage(image, image.shape[1], image.shape[0], image.strides[0], qformat)
         outImage = outImage.rgbSwapped()
+        print('++++++++++++++++++++++++++++')
         if window == 1:
 
                 self.imgLabel.setPixmap(QPixmap.fromImage(outImage))
