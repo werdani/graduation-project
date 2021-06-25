@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QApplication, QDialog
 import resource
 # from model import Model
 from out_window import Ui_OutputDialog
+from register import Ui_register
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QApplication, QWidget
 
 class Ui_loginfor(QDialog):
@@ -22,13 +23,15 @@ class Ui_loginfor(QDialog):
         self.setMouseTracking(True)
         self.setWindowTitle("XDTeam ")
         self.login.clicked.connect(self.runSlot)
+        self.registerbut.clicked.connect(self.regester)
+
         self.login.setToolTip('This is a tooltip message.')  
         shadow = QGraphicsDropShadowEffect()
         # setting blur radius
         shadow.setOffset(2, 2)
         shadow.setColor(QColor(255, 255, 255))
         shadow.setBlurRadius(17)
-        self.login.setGraphicsEffect(shadow)
+        #self.login.setGraphicsEffect(shadow)
         self._new_window = None
         self.Videocapture_ = None
 
@@ -40,14 +43,17 @@ class Ui_loginfor(QDialog):
 
     @pyqtSlot()
     def runSlot(self):
-        """
-        Called when the user presses the Run button
-        """
-        print("Clicked Run")
+        
         self.refreshAll()
         print(self.Videocapture_)
         ui.hide()  # hide the main window
         self.outputWindow_()  # Create and open new output window
+        
+    
+    def regester(self):
+        self._new_window = Ui_register()
+        self._new_window.show()
+        
         
     def outputWindow_(self):
         """
@@ -64,7 +70,6 @@ if __name__ == "__main__":
     ui = Ui_loginfor()
     ui.show()
     sys.exit(app.exec_())
-
 
 
     
