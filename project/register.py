@@ -5,8 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtWidgets
 import threading
 import mysql
-#import _mysql_connector
-
+import mysql.connector
 import sys
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
@@ -32,13 +31,33 @@ class Ui_register(QDialog):
             email     =  self.email.text()
             password1 =  self.pass1.text()
             password2 =  self.pass2.text()
-            query = "INSERT INTO users (fname,lname,email, pass) VALUES (%s, %s, %s, %s)"
-            value = (first_name,last_name,email, password1)
-            manager.execute(query, value)
-            con.commit()
-            print("Data Inserted ")
+            if (password1 != password2):
+                msgBox = QMessageBox()
+                msgBox.setText("cheek yor password")
+                msgBox.exec_()
+            else:
+                query = "INSERT INTO users (fname,lname,email, pass) VALUES (%s, %s, %s, %s)"
+                value = (first_name,last_name,email, password1)
+                if (email != "metcs@gmail.com"):
+                    msgBox = QMessageBox()
+                    msgBox.setText("Please enter your offical email")
+                    msgBox.exec_()
+                else:
+                    manager.execute(query, value)
+                    con.commit()
+
+                    self.fname.setText('')
+                    self.lname.setText('')
+                    self.email.setText('')
+                    self.pass1.setText('')
+                    self.pass2.setText('')
+                    msgBox = QMessageBox()
+                    msgBox.setText("Data Inserted")
+                    msgBox.exec_()
         except:
-            print("errror")
+            msgBox = QMessageBox()
+            msgBox.setText("error")
+            msgBox.exec_()
             
 
 if __name__ == "__main__":
