@@ -43,9 +43,7 @@ class Ui_loginfor(QDialog):
 
     @pyqtSlot()
     def runSlot(self):
-        
         self.refreshAll()
-        print(self.Videocapture_)
         ui.hide()  # hide the main window
         self.outputWindow_()  # Create and open new output window
         
