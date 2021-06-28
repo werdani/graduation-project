@@ -17,6 +17,8 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import QtWidgets
+import mysql
+import mysql.connector
 import threading
 import sys
 from PyQt5 import QtWidgets
@@ -46,6 +48,7 @@ class Ui_OutputDialog(QDialog):
         self.Bstop.clicked.connect(self.stop)
         self.checkInButton.clicked.connect(self.checkIn)
         self.checkOutButton.clicked.connect(self.checkOut)
+        self.studentButton.clicked.connect(self.add)
         self.image = None
  
     @pyqtSlot()
@@ -67,6 +70,27 @@ class Ui_OutputDialog(QDialog):
     def stop(self):
         self.NameLabe.setText('stop')
         self.imgLabel.setText(" ")
+
+    def add(self):
+        try:
+            con =mysql.connector.connect(user="root",password="ammar45",host="localhost",database="student")
+            manager   = con.cursor()
+            first_name= self.linefname.text()
+            last_name =  self.linelname.text()
+            n_id      =  self.lineid.text()
+            level     =  self.linelevel.text()
+            query = "INSERT INTO students (fname,lname,id, levle) VALUES (%s, %s, %s, %s)"
+            value = (first_name,last_name,n_id, level)
+            manager.execute(query, value)
+            con.commit()
+
+            self.linefname.setText('')
+            self.linelname.setText('')
+            self.lineid.setText('')
+            self.linelevel.setText('')
+            print("Data Inserted ")
+        except:
+            print("errror")
 
 
     def start(self):
