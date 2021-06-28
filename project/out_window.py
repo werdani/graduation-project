@@ -17,7 +17,6 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import QtWidgets
-
 import threading
 import sys
 from PyQt5 import QtWidgets
@@ -272,8 +271,7 @@ class Ui_OutputDialog(QDialog):
         msg.setDetailedText("The details are as follows:")
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
 
-
-
+    
     def ElapseList(self,name):
         with open('Attendance.csv', "r") as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=';')
