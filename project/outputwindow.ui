@@ -48,7 +48,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">color:green;</string>
    </property>
    <property name="currentIndex">
     <number>0</number>
@@ -162,7 +162,7 @@ border-radius: 25px;
       <rect>
        <x>450</x>
        <y>90</y>
-       <width>271</width>
+       <width>421</width>
        <height>351</height>
       </rect>
      </property>
@@ -269,7 +269,7 @@ border-radius: 25px;
        <rect>
         <x>130</x>
         <y>30</y>
-        <width>121</width>
+        <width>271</width>
         <height>281</height>
        </rect>
       </property>
@@ -636,10 +636,10 @@ border-radius: 25px;
     <widget class="QLabel" name="NameLabe2">
      <property name="geometry">
       <rect>
-       <x>730</x>
-       <y>100</y>
-       <width>21</width>
-       <height>51</height>
+       <x>760</x>
+       <y>40</y>
+       <width>16</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="font">
@@ -653,6 +653,99 @@ border-radius: 25px;
      <property name="text">
       <string>1</string>
      </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>740</x>
+       <y>0</y>
+       <width>131</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Calibri</family>
+       <pointsize>13</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="title">
+      <string>Mode</string>
+     </property>
+     <widget class="QPushButton" name="darkk">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Roboto Condensed Light</family>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #ffffff;
+background-color: black;
+border: 2px solid #66CDAA;  
+border-radius: 25px;
+</string>
+      </property>
+      <property name="text">
+       <string>dark</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="whitee">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>20</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Roboto Condensed Light</family>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: black;
+background-color: white;
+border: 2px solid #66CDAA;  
+border-radius: 25px;
+
+</string>
+      </property>
+      <property name="text">
+       <string>white</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
