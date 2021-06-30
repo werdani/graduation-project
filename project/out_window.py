@@ -1,6 +1,6 @@
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import pyqtSlot, QTimer, QDate, Qt
+from PyQt5.QtCore import pyqtSlot, QTimer, QDate
 from PyQt5.QtWidgets import QDialog,QMessageBox
 import cv2
 import face_recognition
@@ -9,23 +9,14 @@ import datetime
 import os
 import csv
 import glob
-import urllib.request
-import urllib.error
 import time
 from PyQt5.QtWidgets import *
-from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtWidgets
 import mysql
 import mysql.connector
 import threading
-import sys
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
-import resource
-# from model import Model
-#from out_window import Ui_OutputDialog
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QApplication, QWidget
 
 class Ui_OutputDialog(QDialog):
@@ -49,7 +40,12 @@ class Ui_OutputDialog(QDialog):
         self.checkInButton.clicked.connect(self.checkIn)
         self.checkOutButton.clicked.connect(self.checkOut)
         self.studentButton.clicked.connect(self.add)
+        self.darkk.clicked.connect(self.dark)
+        self.whitee.clicked.connect(self.white)
         self.image = None
+    
+    
+
  
     @pyqtSlot()
     def startVideo(self, camera_name):
@@ -70,6 +66,13 @@ class Ui_OutputDialog(QDialog):
     def stop(self):
         self.NameLabe.setText('stop')
         self.imgLabel.setText(" ")
+    def dark(self):
+        self.setStyleSheet("background-color: black;color: white")
+        self.setWindowTitle("Color")
+
+    def white(self):
+        self.setStyleSheet("background-color: white;color: black")
+        self.setWindowTitle("Color")
 
     def add(self):
         try:
@@ -88,9 +91,13 @@ class Ui_OutputDialog(QDialog):
             self.linelname.setText('')
             self.lineid.setText('')
             self.linelevel.setText('')
-            print("Data Inserted ")
+            msgBox = QMessageBox()
+            msgBox.setText("Data Inserted")
+            msgBox.exec_()
         except:
-            print("errror")
+            msgBox = QMessageBox()
+            msgBox.setText("error")
+            msgBox.exec_()
 
 
     def start(self):
