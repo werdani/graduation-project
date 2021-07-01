@@ -1,17 +1,13 @@
 from PyQt5.QtWidgets import * 
-from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *  
-from PyQt5 import QtWidgets
-import threading
-
 import sys
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog
-import resource
-# from model import Model
+import mysql.connector
+import mysql
 from out_window import Ui_OutputDialog
 from register import Ui_register
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QApplication, QWidget
@@ -43,9 +39,29 @@ class Ui_loginfor(QDialog):
 
     @pyqtSlot()
     def runSlot(self):
+        #EMAIL = self.email.text()
+        #PASSWORD = self.password.text()
+        #to connect with database .
+        #con =mysql.connector.connect(user='root',password='ammar45',host='localhost',database='user')
+        #Create a Cursor object to execute queries.
+        #manager = con.cursor()
+        #print('ammar')
+        #get_email = ("SELECT email FROM users WHERE email = '%s'"%str(EMAIL))
+        #get_password = ("SELECT pass FROM users WHERE pass = '%s'"%str(PASSWORD))
+        #manager.execute(get_email,get_password)
+        #print("welcom")
+
+        #if self.email.text()== get_email and self.password.text() == get_password:
+           # print('ok ok ')
         self.refreshAll()
         ui.hide()  # hide the main window
         self.outputWindow_()  # Create and open new output window
+        #else:
+            #print(get_email)
+            #print(get_password)
+            #msg = QMessageBox()
+            #msg.setText("check your email or password")
+            #msg.exec_()
         
     
     def regester(self):

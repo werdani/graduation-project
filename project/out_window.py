@@ -67,7 +67,7 @@ class Ui_OutputDialog(QDialog):
         self.NameLabe.setText('stop')
         self.imgLabel.setText(" ")
     def dark(self):
-        self.setStyleSheet("background-color: black;color: white")
+        self.setStyleSheet("background-color: #0f2231 ;color: white")
         self.setWindowTitle("Color")
 
     def white(self):
@@ -103,7 +103,6 @@ class Ui_OutputDialog(QDialog):
     def start(self):
             self.NameLabe.setText('start')
             self.capture = cv2.VideoCapture(int(0), cv2.CAP_DSHOW)
-
             self.checkInButton.setChecked(False)
             self.checkInButton.setEnabled(True)
             path = 'ImagesAttendance'
@@ -115,14 +114,12 @@ class Ui_OutputDialog(QDialog):
             self.TimeList1 = []
             self.TimeList2 = []
             attendance_list = os.listdir(path)
-
             # print(attendance_list)
             for cl in attendance_list:
                 cur_img = cv2.imread(f'{path}/{cl}')
                 images.append(cur_img)
                 x=cl.rsplit('.', 666)
                 self.class_names.append(x[0])
-
             for img in images:
                 try:
                     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -133,7 +130,6 @@ class Ui_OutputDialog(QDialog):
                 except Exception as e:
                     print(e)
             if self.NameLabe.text()=='start':
-
                 self.timer.timeout.connect(self.update_frame)  # Connect timeout to the output function
                 self.timer.start(500)  # emit the timeout() signal at x=40ms
 

@@ -105,7 +105,7 @@ padding-bottom:4px;
 padding-left:22px;</string>
     </property>
     <property name="placeholderText">
-     <string>Lsat Name</string>
+     <string>Last Name</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="email">

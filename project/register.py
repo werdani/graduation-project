@@ -1,9 +1,6 @@
 from PyQt5.QtWidgets import * 
-from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import * 
 from PyQt5.QtCore import *  
-from PyQt5 import QtWidgets
-import threading
 import mysql
 import mysql.connector
 import sys
@@ -11,8 +8,6 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog
-import resource
-from out_window import Ui_OutputDialog
 
 from PyQt5.QtWidgets import QLineEdit, QVBoxLayout, QApplication, QWidget
 
@@ -38,22 +33,17 @@ class Ui_register(QDialog):
             else:
                 query = "INSERT INTO users (fname,lname,email, pass) VALUES (%s, %s, %s, %s)"
                 value = (first_name,last_name,email, password1)
-                if (email != "metcs@gmail.com"):
-                    msgBox = QMessageBox()
-                    msgBox.setText("Please enter your offical email")
-                    msgBox.exec_()
-                else:
-                    manager.execute(query, value)
-                    con.commit()
+                manager.execute(query, value)
+                con.commit()
 
-                    self.fname.setText('')
-                    self.lname.setText('')
-                    self.email.setText('')
-                    self.pass1.setText('')
-                    self.pass2.setText('')
-                    msgBox = QMessageBox()
-                    msgBox.setText("Data Inserted")
-                    msgBox.exec_()
+                self.fname.setText('')
+                self.lname.setText('')
+                self.email.setText('')
+                self.pass1.setText('')
+                self.pass2.setText('')
+                msgBox = QMessageBox()
+                msgBox.setText("Data Inserted")
+                msgBox.exec_()
         except:
             msgBox = QMessageBox()
             msgBox.setText("error")
