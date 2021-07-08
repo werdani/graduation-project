@@ -32,36 +32,21 @@ class Ui_loginfor(QDialog):
         self.Videocapture_ = None
 
     def refreshAll(self):
-        """
-        Set the text of lineEdit once it's valid
-        """
         self.Videocapture_ = "1"
 
     @pyqtSlot()
     def runSlot(self):
-        #EMAIL = self.email.text()
-        #PASSWORD = self.password.text()
-        #to connect with database .
-        #con =mysql.connector.connect(user='root',password='ammar45',host='localhost',database='user')
-        #Create a Cursor object to execute queries.
-        #manager = con.cursor()
-        #print('ammar')
-        #get_email = ("SELECT email FROM users WHERE email = '%s'"%str(EMAIL))
-        #get_password = ("SELECT pass FROM users WHERE pass = '%s'"%str(PASSWORD))
-        #manager.execute(get_email,get_password)
-        #print("welcom")
-
-        #if self.email.text()== get_email and self.password.text() == get_password:
-           # print('ok ok ')
-        self.refreshAll()
-        ui.hide()  # hide the main window
-        self.outputWindow_()  # Create and open new output window
-        #else:
-            #print(get_email)
-            #print(get_password)
-            #msg = QMessageBox()
-            #msg.setText("check your email or password")
-            #msg.exec_()
+        EMAIL = self.email.text()
+        PASSWORD = self.password.text()
+        
+        if EMAIL == "xd@gmail.com" and PASSWORD == "12345":
+            self.refreshAll()
+            ui.hide()  # hide the main window
+            self.outputWindow_()  # Create and open new output window
+        else:
+            msg = QMessageBox()
+            msg.setText("check your email or password")
+            msg.exec_()
         
     
     def regester(self):
@@ -70,14 +55,10 @@ class Ui_loginfor(QDialog):
         
         
     def outputWindow_(self):
-        """
-        Created new window for vidual output of the video in GUI
-        """
         self._new_window = Ui_OutputDialog()
         self._new_window.show()
         self._new_window.startVideo(self.Videocapture_)
 
-        print("Video Played")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
