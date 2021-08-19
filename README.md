@@ -12,7 +12,7 @@ this project about face-recognition attendance systeam .
 
 ![darkk](https://user-images.githubusercontent.com/51214702/126020503-f0b631ca-e794-4abf-acf6-e0bd842fc745.JPG)
 
-<h1>4- main form with white:-</h1>
+<h1>4- main form with white :-</h1>
 
 ![white](https://user-images.githubusercontent.com/51214702/126415021-9102df69-e91b-408a-8307-8e64c4dd93b3.JPG)
 
