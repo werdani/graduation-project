@@ -8,7 +8,7 @@ this project about face-recognition attendance systeam .
 
 ![re](https://user-images.githubusercontent.com/51214702/125541523-d0e93330-e039-4302-92af-3e900c820f5b.JPG)
 
-<h1>3- main form with dark:-</h1>
+<h1>3- main form with dark :-</h1>
 
 ![darkk](https://user-images.githubusercontent.com/51214702/126020503-f0b631ca-e794-4abf-acf6-e0bd842fc745.JPG)
 
